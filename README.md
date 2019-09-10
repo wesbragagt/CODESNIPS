@@ -27,3 +27,12 @@ var newArr = arr.reduce((accumulator, currentValue, currentIndex) => {
 	return accumulator.concat(currentValue)
 }, [])
 ```
+
+# build an array of objects from a object of objects
+
+```javascript
+const newArr = Object.entries(updated).reduce((accumulator, currentValue) => {
+	let [key, value] = currentValue
+	return (accumulator = [...accumulator, { [key]: value }])
+}, [])
+```
