@@ -28,7 +28,7 @@ var newArr = arr.reduce((accumulator, currentValue, currentIndex) => {
 }, [])
 ```
 
-# turn a object of objects into a array of objects preserving previous indexes
+# Object of Objects > Array of Objects
 
 ```javascript
 function objToArr(obj) {
@@ -39,7 +39,7 @@ function objToArr(obj) {
 }
 ```
 
-# turn object of objects into an array of objects saving its previous index as a new property within the object
+## Assign another property to each object in array of objects
 
 ```javascript
 function ObjToArrWithIndex(obj) {
