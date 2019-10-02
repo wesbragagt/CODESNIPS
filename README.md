@@ -11,21 +11,21 @@ slicePropFromObj = (obj, start, end) => {
 		.slice(start, end)
 
 		.reduce((result, key) => {
-			result[key] = obj[key]
+			result[key] = obj[key];
 
-			return result
-		}, {})
-}
+			return result;
+		}, {});
+};
 ```
 
 # Flat array of arrays
 
 ```javascript
-var arr = [['abc', 'dbe', 'lejk'], ['yui', 'ouq', 'lou']]
+var arr = [['abc', 'dbe', 'lejk'], ['yui', 'ouq', 'lou']];
 
 var newArr = arr.reduce((accumulator, currentValue, currentIndex) => {
-	return accumulator.concat(currentValue)
-}, [])
+	return accumulator.concat(currentValue);
+}, []);
 ```
 
 # Object of Objects > Array of Objects
@@ -33,9 +33,9 @@ var newArr = arr.reduce((accumulator, currentValue, currentIndex) => {
 ```javascript
 function objToArr(obj) {
 	return Object.entries(obj).reduce((accumulator, currentValue) => {
-		let [key, value] = currentValue
-		return (accumulator = [...accumulator, { [key]: value }])
-	}, [])
+		let [key, value] = currentValue;
+		return (accumulator = [...accumulator, { [key]: value }]);
+	}, []);
 }
 ```
 
@@ -44,10 +44,19 @@ function objToArr(obj) {
 ```javascript
 function ObjToArrWithIndex(obj) {
 	return Object.entries(obj).reduce((accumulator, currentValue, currentIndex) => {
-		let [key, value] = currentValue
-		let newObj = Object.assign({}, value, { _index: key })
-		newObj._index = parseInt(newObj._index)
-		return (accumulator = [...accumulator, newObj])
-	}, [])
+		let [key, value] = currentValue;
+		let newObj = Object.assign({}, value, { _index: key });
+		newObj._index = parseInt(newObj._index);
+		return (accumulator = [...accumulator, newObj]);
+	}, []);
+}
+```
+
+## Modify Date format of an object property replacing / for -
+
+```javascript
+function formatDate(dateString) {
+	var newDate = new Date(dateString);
+	return newDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).replace(/\//g, '-');
 }
 ```
