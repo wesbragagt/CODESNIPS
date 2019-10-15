@@ -60,3 +60,22 @@ function formatDate(dateString) {
 	return newDate.toLocaleString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).replace(/\//g, '-');
 }
 ```
+
+## Group array of objects by a property
+
+```javascript
+function groupBy(objectArray, property) {
+	return objectArray.reduce(function(acc, obj) {
+		var key = obj[property];
+		if (!acc[key]) {
+			acc[key] = [];
+		}
+		var newObj = Object.assign({}, { value: obj['ENTITY_ID'], label: obj['ENTITY_NAME'], original: obj });
+		acc[key].push(newObj);
+		return acc;
+	}, {});
+}
+
+var group = groupBy(entities, 'SERVER_NAME');
+group;
+```
