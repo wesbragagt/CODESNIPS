@@ -79,3 +79,66 @@ function groupBy(objectArray, property) {
 var group = groupBy(entities, 'SERVER_NAME');
 group;
 ```
+
+### Merge data between two arrays
+
+```javascript
+function modifyData(dataArr, updatedData) {
+	let prevData = dataArr;
+
+	let dataIndexesArr = findDataIndexes(prevData, updatedData);
+	// modify each row that matches the index found from the masterList = data list of data
+	dataIndexesArr.forEach((dataIndex, currentRowIndex) => (prevData[dataIndex] = updatedData[currentRowIndex]));
+	// build new arr
+	const newArr = prevData.map(data => {
+		delete data['MEDICATION_ROUTE_ID'];
+		delete data['ROUTE_DESCRIPTION'];
+		delete data['_index'];
+
+		return data;
+	});
+	return newArr;
+}
+```
+
+## UTILITY FUNC RETURNS AN ARRAY OF INDEXES TO MODIFY
+
+```javascript
+function findDataIndexes(dataArr, updatedData) {
+	let dataIndexesArr = updatedData.map(targetModified =>
+		dataArr.findIndex(
+			dataRow =>
+				dataRow['NDC_CODE'] == targetModified['NDC_CODE'] &&
+				dataRow['ROUTE_NAME'] == targetModified['ROUTE_NAME'] &&
+				dataRow['NDC_PRODUCT_CODE'] == targetModified['NDC_PRODUCT_CODE']
+		)
+	);
+
+	return dataIndexesArr;
+}
+```
+
+### iterates through an array and assign object values to each row returning its newly modified version (i.e assignValueWithModifiedFlag(data, {REVIEWED_YN: 1}) )
+
+```javascript
+function assignValueWithModifiedFlag(targetArr, value) {
+	let dataToMod = targetArr;
+	// modify each row with values
+	targetArr.forEach((dataRow, i) => {
+		// when the target object does not have a modifiedFlag assigned
+		if (!dataRow.modifiedFlag) {
+			// reasign an object with the modified values
+			dataToMod[i] = Object.assign({}, dataRow, value, {
+				modifiedFlag: value
+			});
+		} else {
+			// when a modified flag has been assigned
+			// make a copy of the previous modifiedFlag object with the new flag
+			let newFlag = Object.assign(dataRow.modifiedFlag, value);
+			// reassign object with the previous modified flag and the new one
+			dataToMod[i] = Object.assign({}, dataRow, value, newFlag);
+		}
+	});
+	return dataToMod;
+}
+```
