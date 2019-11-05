@@ -142,3 +142,34 @@ function assignValueWithModifiedFlag(targetArr, value) {
 	return dataToMod;
 }
 ```
+
+### Convert Excel Sheet data to a JSON object with columns and rows separated 
+
+```javascript
+
+function sheetToJson(arr){
+ return arr.reduce(function(acc, current){
+	let arrObj = Object.entries(current)
+	let columns = []
+	let rows = []
+		arrObj.forEach(e => {
+		const [column, row] = e
+		columns.push(column)
+		rows.push(row)
+		})
+  		return Object.assign(acc, {columns, rows})
+	}, {})
+}
+
+output = {
+  columns: [
+    'Exclude Vital from this Location',
+    'Mnemonic',
+    'Hospital Service Location Description',
+    "Don't Alert on this Location",
+    'Keep This Location Off the WQ'
+  ],
+  rows: [ 'X', 'Pre', 'Some Description Here', 'X', '' ]
+}
+
+```
