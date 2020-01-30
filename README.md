@@ -173,3 +173,20 @@ output = {
 }
 
 ```
+
+## Protect all api routes and whitelists routes that are allowed to be reached without authentication
+```javascript
+// Curryed es6 arrow syntax
+const unlessES6 = (middleware, ...paths) => (req, res, next) => paths.some(path => path === req.path) ? next() : middleware(req, res, next);
+// raw
+const unlessRAW = function(middleware, ...paths){
+	return function(req,res,next){
+		const isItAnUnAuthenticatedRoute = paths.some(path => path === req.path)
+		if(isItAnUnAuthenticatedRoute){
+			return next()
+		} else {
+			return middleware(req,res,next)
+		}
+	}
+}
+```
