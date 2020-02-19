@@ -190,3 +190,13 @@ const unlessRAW = function(middleware, ...paths){
 	}
 }
 ```
+
+## Convert array of objects into a dictionary mapping by a certain ID key property
+```javascript
+function toDictionaryMapping(arr, key){
+  return arr.reduce((acc, cur) => {
+    const id = cur[key]
+    return {...acc, [id]: cur}
+  }, {})
+}
+```
