@@ -200,3 +200,34 @@ function toDictionaryMapping(arr, key){
   }, {})
 }
 ```
+## Takes a dataset object and transform all its properties to make SQL's store procedure parameters
+```javascript
+function transformPropertiesToParams (obj: object) {
+  const capitalize = (str: string): string => {
+    const firstLetter = str.charAt(0)
+    return firstLetter.toUpperCase() + str.slice(1)
+  }
+
+  const charType = (value: any): string => {
+    const type = typeof value
+    return type.charAt(0)
+  }
+
+  let newObj: object = {}
+  for (let key in obj) {
+    const value = obj[key]
+    const letter = charType(value)
+
+    const newKey =
+      letter +
+      key
+        .toLowerCase()
+        .split('_')
+        .map(capitalize)
+        .join('')
+
+    newObj = Object.assign({}, newObj, { [newKey]: value })
+  }
+  return newObj
+}
+```
